@@ -2,8 +2,11 @@ library(raster)
 library(rgdal)
 library(viridis)
 library(dplyr)
+library(shinythemes)
+library(plotly)
 
-#setwd("C:/GitHub/RC-som-shiny/prototype/RCproto")
+
+#setwd("C:/GitHub/RC_shiny")
 
 RC_database <- readRDS("data/RC_database_current.rds")
 RC_database  <- type.convert(RC_database)
@@ -77,7 +80,6 @@ num_vars <- c(
 num_vars <- RC_data_summary$Variable
 names(num_vars) <- RC_data_summary$Short_Desc 
             
-
 raster_lyrs <- c(
   "None" = 0,
   "Soil Temperature" = 1,
@@ -89,3 +91,4 @@ raster_lyrs <- c(
 char_vars <- c(
   "Watershed" = "L1"
 )
+

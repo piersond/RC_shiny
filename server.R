@@ -19,6 +19,53 @@ drop_cols <- c('google_id', 'addit_contact_email', 'addit_contact_person', 'auth
 ### SERVER STARTS HERE ###
 function(input, output, session) {
 
+  
+### PLOT HIGHCHART STARTS HERE ###  
+  observeEvent(c(input$plot_x, input$plot_y, input$plot_color), {
+    
+    # Make a smaller dataframe to speed up highchart render
+    plot_df <- data.frame(uniqueID = RC_data["uniqueID"],
+                          lat = RC_data["lat"],
+                          long= RC_data["long"],
+                          x_data = RC_data[input$plot_x],
+                          y_data = RC_data[input$plot_y],
+                          col_data = RC_data[input$plot_color])
+    colnames(plot_df) <- c("uniqueID","lat", "long", "x_data", "y_data", "col_data")
+    
+    #Plotly plot
+    output$chart1 <- renderPlotly({
+      p1 <- ggplot(data=plot_df, aes(x=x_data, y=y_data, color=col_data)) +
+              geom_point() +
+              xlab(names(num_vars)[num_vars == input$plot_x]) +
+              ylab(names(num_vars)[num_vars == input$plot_y]) +
+              labs(color=names(num_vars)[num_vars == input$plot_color]) +
+              scale_color_viridis(discrete=FALSE) +
+              theme_minimal()
+      
+      p2 <- ggplotly(p1)
+      p2
+
+    })
+    
+    #Create plot datatable
+    plot_dt_df <- plot_df %>% 
+      mutate(Action = paste('<a class="go-map" href="" data-lat="', lat, '" data-long="', long, '" data-zip="', uniqueID, '"><i class="fa fa-crosshairs"></i></a>', sep=""))
+    action <- DT::dataTableAjax(session, plot_dt_df, outputId = "ziptable")
+    
+    colnames(plot_dt_df) <- c("uniqueID","lat", "long", input$plot_x, input$plot_y, input$plot_color, "Action")
+    
+    output$plotTBL <- DT::renderDataTable({
+      DT::datatable(plot_dt_df, 
+                  options = list(ajax = list(url = action), 
+                                 lengthMenu = c(25, 50, 100), 
+                                 pageLength = 25,
+                                 columnDefs = list(list(className = 'dt-center', targets = 0:4))), 
+                  escape = FALSE, 
+                  class = "display nowrap")
+    })
+  })
+
+  
 ## Interactive Map Starts Here ###
   
   # Create the Leaflet basemap and basemap options

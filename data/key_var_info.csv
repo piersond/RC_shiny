@@ -13,30 +13,30 @@ Treatment_5_level,,tx_L5,profile,,,,
 Treatment_6_level,,tx_L6,profile,,,,
 Observation Date,,observation_date,profile,YYYY-MM-DD or MM/DD/YYYY,character,,
 Profile Vegetation,,veg_note_profile,profile,species names,character,,
-"Bulk Layer Total Carbon, not acid treated to remove inorganic C",Soil Total Carbon,lyr_c_tot,layer,percent,numeric,value,percent
-"Bulk Layer Organic Carbon (CN analyzer) concentration, inorganic C removed or not present",Soil Organic Carbon %,lyr_soc,layer,percent,numeric,value,percent
-Bulk Layer Organic Carbon (CN analyzer) stock,Soil Organic Carbon Stock,lyr_soc_stock,layer,g C m-2,numeric,value,percent
+"Bulk Layer Total Carbon, not acid treated to remove inorganic C",Soil Total Carbon (%),lyr_c_tot,layer,percent,numeric,value,percent
+"Bulk Layer Organic Carbon (CN analyzer) concentration, inorganic C removed or not present",Soil Organic Carbon (%),lyr_soc,layer,percent,numeric,value,percent
+Bulk Layer Organic Carbon (CN analyzer) stock,Soil Organic Carbon Stock (g C m-2),lyr_soc_stock,layer,g C m-2,numeric,value,percent
 Bulk Layer Loss on Ignition,Soil Loss on Ignition,lyr_loi,layer,percent,numeric,value,percent
 Bulk Layer OM (Walkley Balck),,lyr_som_WalkleyBlack,layer,percent,,,
-Bulk Layer Total Nitrogen concentration,Soil Total Nitrogen %,lyr_n_tot,layer,percent,numeric,value,percent
-Bulk Layer Total Nitrogen stock,Soil Total Nitrogen Stock,lyr_n_tot_stock,layer,g N m-2,numeric,value,percent
+Bulk Layer Total Nitrogen concentration,Soil Total Nitrogen (%),lyr_n_tot,layer,percent,numeric,value,percent
+Bulk Layer Total Nitrogen stock,Soil Total Nitrogen Stock (g N m-2),lyr_n_tot_stock,layer,g N m-2,numeric,value,percent
 Bulk Layer C:N,Soil C:N,lyr_c_to_n,layer,unitless,numeric,value,unitless
-Bulk Layer ?15N,Soil 15N,lyr_15n,layer,permil,numeric,value,permil
-Bulk Layer ?13C,Soil 13C,lyr_13c,layer,permil,numeric,value,permil
+Bulk Layer ?15N,Soil 15N (‰),lyr_15n,layer,permil,numeric,value,permil
+Bulk Layer ?13C,Soil 13C (‰),lyr_13c,layer,permil,numeric,value,permil
 Layer Top,,layer_top,layer,cm,numeric,,cm
 Layer Bottom,,layer_bot,layer,cm,numeric,,cm
 Layer middle,,layer_mid,layer,cm,numeric,,cm
 Horizon,,hzn,layer,,character,,
-"Bulk Density, Coarse Fragments Removed",Bulk Density - Coarse Removed,bd_samp,layer,g cm-3,numeric,value,g cm-3
-Bulk Density With Coarse Fragments,Bulk Density - Coarse Included,bd_tot,layer,g cm-3,numeric,value,g cm-3
+"Bulk Density, Coarse Fragments Removed",Bulk Density - Coarse Removed (g cm-3),bd_samp,layer,g cm-3,numeric,value,g cm-3
+Bulk Density With Coarse Fragments,Bulk Density - Coarse Included (g cm-3),bd_tot,layer,g cm-3,numeric,value,g cm-3
 Bulk Density Method or Other Notes,,^bd_,layer,,character,method,
 Soil pH CaCl2,,ph_cacl,layer,unitless,numeric,value,
 Soil pH in water,Soil pH  (water),ph_h2o,layer,unitless,numeric,value,
 Soil pH Other,,ph_other,layer,unitless,numeric,value,
-Sand,Sand %,sand,layer,percent,numeric,value,percent
-Silt,Silt %,silt,layer,percent,numeric,value,percent
-Clay,Clay %,clay,layer,percent,numeric,value,percent
-Coarse Fraction,Coarse Fraction %,coarse_frac,layer,percent,numeric,value,percent
+Sand,Sand (%),sand,layer,percent,numeric,value,percent
+Silt,Silt (%),silt,layer,percent,numeric,value,percent
+Clay,Clay (%),clay,layer,percent,numeric,value,percent
+Coarse Fraction,Coarse Fraction (%),coarse_frac,layer,percent,numeric,value,percent
 Coarse Fraction Size Threshold Used,,coarse_tot,layer,mm,character,method,
 Texture Class,,profile_texture_class,profile,(texture_class),factor,,
 Bulk Layer Surface Area Measured By BET,,bet_surface_area,layer,,character,value,

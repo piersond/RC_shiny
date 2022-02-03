@@ -1,18 +1,21 @@
 library(leaflet)
 
+
+
+
 ####################
 ### BEGIN UI ###
 
 # Create a conditional password panel 
 fluidPage(
   #Show if password is not entered
-  conditionalPanel(id = "myId", condition = "input.password != 'p'", #<-- Change password here, 1 of 2
+  conditionalPanel(id = "myId", condition = "input.password != 'rcdata'", #<-- Change password here, 1 of 2
     h1("Reynolds Creek SoDaH Database"),
     passwordInput("password", h3("Enter password:"), value = ""),
     p("Contact Derek Pierson (derekpierson@isu.edu) for access to database.")
   ), 
   #Show if password is entered correctly (entire app)
-  conditionalPanel(condition = "input.password == 'p'", #<-- Change password here, 2 of 2  
+  conditionalPanel(condition = "input.password == 'rcdata'", #<-- Change password here, 2 of 2  
 
 ### MAIN APP PAGE STARTS HERE ###                   
   navbarPage("Reynolds Creek Experimental Watershed", id="nav",
@@ -36,9 +39,9 @@ fluidPage(
         class = "panel panel-default", 
         fixed = TRUE,
         draggable = TRUE, 
-        top = 200, 
+        top = 180, 
         left = "auto", 
-        right = 180, 
+        right = 240, 
         bottom = "auto",
         width = 330, 
         height = "auto",
@@ -74,8 +77,39 @@ fluidPage(
     )
   ),
 
+### DATA PLOT TAB STARTS HERE ### 
+tabPanel("Plot Explorer",
+         fluidRow(
+           column(2, style = "background-color:#e4e7eb;",
+                  h2("Plot options:"),
+                  hr(),
+                  selectInput("plot_type", "Plot type:", c("Scatter","Bar","Box", "Time Series")),
+                  selectInput("plot_x", "X-axis Variable:", num_vars),
+                  selectInput("plot_y", "Y-axis Variable:", num_vars),
+                  selectInput("plot_color", "Color by:", num_vars),
+                  hr(),
+                  helpText("Notes go here.")
+           ),
+           column(10,
+                  div(style = 'padding-top:20px; padding-left:40px;',  
+                  # Create plotly UI element
+                  plotlyOutput("chart1",
+                               width = "1000px",
+                               height = "600px"))
+                  )
+           ),
+         div(style = 'padding-top:10px;'),
+         hr(),
+         fluidRow(
+           column(2),
+           column(8,
+           # Insert a datatable object (set up in server.R)
+           DT::dataTableOutput("plotTBL"))
+         )
+         ),
+
 ### DATA EXPLORER TAB STARTS HERE ###   
-    tabPanel("Data Explorer",
+    tabPanel("Dynamic Table",
       #Create a row with columns
       fluidRow(
         column(4,
@@ -97,8 +131,8 @@ fluidPage(
       hr(), # Insert a horizontal line break
       
       # Add a custom panel element to add a crosshair button to each data table row 
-      conditionalPanel("false", icon("crosshair")),
-      
+      conditionalPanel("false", icon("crosshair")), 
+
       # Insert a datatable object (set up in server.R)
       DT::dataTableOutput("databaseTBL")
       ),
@@ -111,7 +145,10 @@ fluidPage(
            fluidRow(
              column(6,
                 DT::dataTableOutput("data_summaryTBL")))
-  )
+   )
+
   ) # Close navbarpage
   ) # Close conditional panel containing the entire app UI
 ) # Close the UI (fluidpage)
+
+
