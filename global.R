@@ -4,7 +4,10 @@ library(viridis)
 library(dplyr)
 library(shinythemes)
 library(plotly)
-
+library(leaflet)
+library(RColorBrewer)
+library(scales)
+library(lattice)
 
 #setwd("C:/GitHub/RC_shiny")
 

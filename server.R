@@ -1,10 +1,7 @@
-library(leaflet)
-library(RColorBrewer)
-library(scales)
-library(lattice)
-library(dplyr)
 
-# Prep variables for server use
+
+###################################
+### Prep variables for server use
 
 # Work from a copy of the database
 RC_data <- RC_database

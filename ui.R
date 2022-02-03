@@ -1,6 +1,3 @@
-library(leaflet)
-
-
 
 
 ####################
@@ -145,7 +142,16 @@ tabPanel("Plot Explorer",
            fluidRow(
              column(6,
                 DT::dataTableOutput("data_summaryTBL")))
-   )
+   ),
+
+### SENSORS TAB STARTS HERE ###   
+  tabPanel("Sensors"),
+         
+### SOURCES TAB STARTS HERE ###   
+  tabPanel("Resources"),
+
+### SOURCES TAB STARTS HERE ###   
+  tabPanel("Contact")
 
   ) # Close navbarpage
   ) # Close conditional panel containing the entire app UI
