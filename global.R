@@ -16,6 +16,8 @@ RC_database  <- type.convert(RC_database)
 RC_database$uniqueID <- paste0("ID",seq(1,nrow(RC_database),1))
 RC_database <- RC_database %>% filter(!is.na(lat)) %>% filter(!is.na(long))
 
+# How many unique locations?
+#count(unique(RC_database[c("lat", "long")]))
 
 #KeyKey summary
 var_info <- read.csv("data/key_var_info.csv")
@@ -25,7 +27,7 @@ RC_data_n <- data.frame(n=colSums(!is.na(RC_database)))
 RC_data_n$var <- row.names(RC_data_n)
 RC_data_summary <- left_join(RC_data_n, var_info)
 RC_data_summary <- RC_data_summary %>% 
-                    filter(Level != "location") %>%
+                    filter(is.na(Level) | Level != "location") %>%
                     select(var, Var_short, Var_long, n) %>%
                     filter(!var %in% c("L1", "L2", "L3", "observation_date",
                                        "layer_top", "layer_bot", "coarse_tot",
@@ -70,18 +72,14 @@ raster_HILLSH <- raster("./map/RCrk_DEM_Hillshade_3857.tif")
 # Global app varibales
 ########################
 # Choices for map panel drop-down
-num_vars <- c(
-  "None" = "none",
-  "SOC %" = "lyr_soc",
-  "SOC Stock" = "lyr_soc_stock",
-  "SIC %" = "lyr_sic",
-  "SIC Stock" = "lyr_sic_stock",
-  "Total Soil C" = "lyr_c_tot",
-  "Total Soil N" = "lyr_n_tot"
-)
-
-num_vars <- RC_data_summary$Variable
-names(num_vars) <- RC_data_summary$Short_Desc 
+num_vars <- RC_data_summary %>% 
+              filter(!is.na(Variable)) %>%
+              filter(!is.na(Short_Desc)) %>%
+              pull(Variable)
+names(num_vars) <- RC_data_summary %>% 
+                    filter(!is.na(Variable)) %>%
+                    filter(!is.na(Short_Desc)) %>%
+                    pull(Short_Desc) 
             
 raster_lyrs <- c(
   "None" = 0,

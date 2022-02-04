@@ -67,9 +67,11 @@ function(input, output, session) {
   
   # Create the Leaflet basemap and basemap options
   output$map <- renderLeaflet({
-    leaflet() %>%
+    leaflet() %>% 
+      
       # Add basemap options
-      addProviderTiles("Esri.WorldImagery", group = "Esri.WorldImagery") %>%
+      addProviderTiles("Esri.WorldImagery", group = "Esri.WorldImagery",
+                       options = providerTileOptions(opacity = 1)) %>%
       addProviderTiles("OpenStreetMap", group = "OpenStreetMap") %>% #Group = layer name
       addProviderTiles("Stamen.Toner", group = "Stamen.Toner") %>%
       addProviderTiles("Stamen.Terrain", group = "Stamen.Terrain") %>%
@@ -79,10 +81,15 @@ function(input, output, session) {
       # Add basemap layers control options
       addLayersControl(
         baseGroups = c(
-          "Esri.WorldImagery", "OpenStreetMap", "Stamen.Toner","Stamen.Terrain", 
-          "Esri.WorldStreetMap", "Wikimedia", "CartoDB.Positron"),
+          "Esri.WorldImagery", 
+          "OpenStreetMap", 
+          "Stamen.Toner",
+          "Stamen.Terrain", 
+          "Esri.WorldStreetMap", 
+          "Wikimedia", 
+          "CartoDB.Positron"),
         position = "topleft",
-        overlayGroups = "overlay",
+        #overlayGroups = c(""),
         options = layersControlOptions(collapsed = TRUE, autoZIndex = FALSE)) %>%
         setView(lng = -116.75, lat = 43.16, zoom = 11) %>% #Set the default map location
   
@@ -419,7 +426,8 @@ function(input, output, session) {
 
   ### Data Summary Table Starts Here ###  
   output$data_summaryTBL <- DT::renderDataTable({    
-    DT::datatable(RC_data_summary %>% select(!Short_Desc), 
+    DT::datatable(RC_data_summary %>% select(!Short_Desc) %>%
+                    filter(!is.na(Description)), 
                   rownames = FALSE, 
                   options = list(dom = 't', pageLength = nrow(RC_data_summary)), 
                   escape = FALSE, 

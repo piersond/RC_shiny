@@ -36,11 +36,11 @@ fluidPage(
         class = "panel panel-default", 
         fixed = TRUE,
         draggable = TRUE, 
-        top = 180, 
+        top = 150, 
         left = "auto", 
         right = 240, 
         bottom = "auto",
-        width = 330, 
+        width = 320, 
         height = "auto",
         h2("Map Explorer"), #Panel title
 
@@ -106,7 +106,7 @@ tabPanel("Plot Explorer",
          ),
 
 ### DATA EXPLORER TAB STARTS HERE ###   
-    tabPanel("Dynamic Table",
+    tabPanel("Database",
       #Create a row with columns
       fluidRow(
         column(4,
@@ -135,14 +135,15 @@ tabPanel("Plot Explorer",
       ),
 
 ### DATA SUMMARY TAB STARTS HERE ### 
-  tabPanel("Data Info",
+  tabPanel("Database Info",
            h2("Database variable information"),
            h4(uniq_loc_text),
            hr(),
            fluidRow(
              column(6,
-                DT::dataTableOutput("data_summaryTBL")))
-   ),
+                DT::dataTableOutput("data_summaryTBL"))),
+           hr()
+           ),
 
 ### SENSORS TAB STARTS HERE ###   
   tabPanel("Sensors"),

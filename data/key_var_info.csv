@@ -11,45 +11,48 @@ Treatment_3_level,,tx_L3,profile,,,,
 Treatment_4_level,,tx_L4,profile,,,,
 Treatment_5_level,,tx_L5,profile,,,,
 Treatment_6_level,,tx_L6,profile,,,,
-Observation Date,,observation_date,profile,YYYY-MM-DD or MM/DD/YYYY,character,,
-Profile Vegetation,,veg_note_profile,profile,species names,character,,
+Observation Date,Observation Date,observation_date,profile,YYYY-MM-DD or MM/DD/YYYY,character,,
+Profile Vegetation,Profile Vegetation,veg_note_profile,profile,species names,character,,
 "Bulk Layer Total Carbon, not acid treated to remove inorganic C",Soil Total Carbon (%),lyr_c_tot,layer,percent,numeric,value,percent
 "Bulk Layer Organic Carbon (CN analyzer) concentration, inorganic C removed or not present",Soil Organic Carbon (%),lyr_soc,layer,percent,numeric,value,percent
-Bulk Layer Organic Carbon (CN analyzer) stock,Soil Organic Carbon Stock (g C m-2),lyr_soc_stock,layer,g C m-2,numeric,value,percent
+Bulk Layer Organic Carbon (CN analyzer) stock,Soil Organic Carbon Stock (g C m-2),lyr_soc_stock,layer,g C m-2,numeric,value,g C m-2
 Bulk Layer Loss on Ignition,Soil Loss on Ignition,lyr_loi,layer,percent,numeric,value,percent
-Bulk Layer OM (Walkley Balck),,lyr_som_WalkleyBlack,layer,percent,,,
+Bulk Layer OM (Walkley Black),SOM (Walkley Black),lyr_som_WalkleyBlack,layer,percent,numeric,value,percent
+Bulk Layer Inorganic Carbon,Soil Inorganic Carbon (%),lyr_sic,layer,percent,numeric,value,percent
+Bulk Layer Inorganic Carbon (CN analyzer) stock,Soil Inorganic Carbon Stock (g C m-2),lyr_sic_stock,layer,g C m-2,numeric,value,g C m-2
+Bulk Layer Loss on Ignition Organic Matter Stock,Soil Loss on Ignition Stock (g C m-2),lyr_loi_OM_stock,layer,g C m-2,numeric,value,g C m-2
 Bulk Layer Total Nitrogen concentration,Soil Total Nitrogen (%),lyr_n_tot,layer,percent,numeric,value,percent
 Bulk Layer Total Nitrogen stock,Soil Total Nitrogen Stock (g N m-2),lyr_n_tot_stock,layer,g N m-2,numeric,value,percent
 Bulk Layer C:N,Soil C:N,lyr_c_to_n,layer,unitless,numeric,value,unitless
-Bulk Layer ?15N,Soil 15N (‰),lyr_15n,layer,permil,numeric,value,permil
-Bulk Layer ?13C,Soil 13C (‰),lyr_13c,layer,permil,numeric,value,permil
-Layer Top,,layer_top,layer,cm,numeric,,cm
-Layer Bottom,,layer_bot,layer,cm,numeric,,cm
-Layer middle,,layer_mid,layer,cm,numeric,,cm
-Horizon,,hzn,layer,,character,,
+Bulk Layer 15N,Soil 15N (‰),lyr_15n,layer,permil,numeric,value,permil
+Bulk Layer 13C,Soil 13C (‰),lyr_13c,layer,permil,numeric,value,permil
+Layer Top,Layer Top,layer_top,layer,cm,numeric,,cm
+Layer Bottom,Layer Bottom,layer_bot,layer,cm,numeric,,cm
+Layer middle,Layer middle,layer_mid,layer,cm,numeric,,cm
+Horizon,Horizon,hzn,layer,,character,,
 "Bulk Density, Coarse Fragments Removed",Bulk Density - Coarse Removed (g cm-3),bd_samp,layer,g cm-3,numeric,value,g cm-3
 Bulk Density With Coarse Fragments,Bulk Density - Coarse Included (g cm-3),bd_tot,layer,g cm-3,numeric,value,g cm-3
-Bulk Density Method or Other Notes,,^bd_,layer,,character,method,
-Soil pH CaCl2,,ph_cacl,layer,unitless,numeric,value,
+Bulk Density Method or Other Notes,Bulk Density Method,^bd_,layer,,character,method,
+Soil pH CaCl2,Soil pH  (CaCl2),ph_cacl,layer,unitless,numeric,value,
 Soil pH in water,Soil pH  (water),ph_h2o,layer,unitless,numeric,value,
-Soil pH Other,,ph_other,layer,unitless,numeric,value,
+Soil pH Other,Soil pH  (other),ph_other,layer,unitless,numeric,value,
 Sand,Sand (%),sand,layer,percent,numeric,value,percent
 Silt,Silt (%),silt,layer,percent,numeric,value,percent
 Clay,Clay (%),clay,layer,percent,numeric,value,percent
 Coarse Fraction,Coarse Fraction (%),coarse_frac,layer,percent,numeric,value,percent
-Coarse Fraction Size Threshold Used,,coarse_tot,layer,mm,character,method,
-Texture Class,,profile_texture_class,profile,(texture_class),factor,,
+Coarse Fraction Size Threshold Used,Coarse Fraction Size Threshold,coarse_tot,layer,mm,character,method,
+Texture Class,Texture Class,profile_texture_class,profile,(texture_class),factor,,
 Bulk Layer Surface Area Measured By BET,,bet_surface_area,layer,,character,value,
-Calcium Carbonate,,caco3,layer,percent,numeric,value,percent
-Calcium,,Ca,layer,mmol kg-1,numeric,value,percent
-Magnesium,,Mg,layer,mmol kg-1,numeric,value,percent
-Posassium,,K,layer,mmol kg-1,numeric,value,percent
-Sodium,,Na,layer,mmol kg-1,numeric,value,percent
-Cation Exchange,,cat_exch,layer,cmol H+ kg-1,numeric,value,cmol H+ kg-1
-Sum of Bases,,base_sum,layer,meq 100g-1,numeric,value,meq 100g-1
-Sum of Cation Exchange Capacity,,cec_sum,layer,meq 100g-1,numeric,value,meq 100g-1
-Effective Cation Exchange Capacity,,ecec,layer,meq 100g-1,numeric,value,meq 100g-1
-% Base Saturation,,bs,layer,percent,numeric,value,percent
+Calcium Carbonate,Calcium Carbonate,caco3,layer,percent,numeric,value,percent
+Calcium,Calcium,Ca,layer,mmol kg-1,numeric,value,percent
+Magnesium,Magnesium,Mg,layer,mmol kg-1,numeric,value,percent
+Posassium,Posassium,K,layer,mmol kg-1,numeric,value,percent
+Sodium,Sodium,Na,layer,mmol kg-1,numeric,value,percent
+Cation Exchange,Cation Exchange,cat_exch,layer,cmol H+ kg-1,numeric,value,cmol H+ kg-1
+Sum of Bases,Sum of Bases,base_sum,layer,meq 100g-1,numeric,value,meq 100g-1
+Sum of Cation Exchange Capacity,Sum of Cation Exchange Capacity,cec_sum,layer,meq 100g-1,numeric,value,meq 100g-1
+Effective Cation Exchange Capacity,Effective Cation Exchange Capacity,ecec,layer,meq 100g-1,numeric,value,meq 100g-1
+% Base Saturation,% Base Saturation,bs,layer,percent,numeric,value,percent
 "Microbial biomass C, raw value",,mbc_raw,layer,mgC/g,numeric,method,
 "Microbial biomass C, reported Value After Transformation",,mbc_trans,layer,mgC/g,character,value,mgC/g
 "Microbial biomass N, raw value",,mbn_raw,layer,mgN/g,numeric,method,
