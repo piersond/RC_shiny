@@ -5,9 +5,13 @@ library(dplyr)
 library(shinythemes)
 library(plotly)
 library(leaflet)
+#library(leafem)
 library(RColorBrewer)
 library(scales)
 library(lattice)
+
+#library(devtools)
+#devtools::install_github("r-spatial/leafem")
 
 #setwd("C:/GitHub/RC_shiny")
 
@@ -51,10 +55,17 @@ rc_boundary <- spTransform(rc_boundary, CRS("+init=epsg:4326"))
 
 
 #Reynolds creek met stations
-#rc_met <- read.csv("./data/ARS_climate_station_locs.csv", as.is=T)
+rc_met <- read.csv("./map/ARS_climate_station_locs.csv", as.is=T) %>% 
+            filter(Group == "MET")
+
+rc_weir <- read.csv("./map/ARS_climate_station_locs.csv", as.is=T) %>% 
+  filter(Group == "WEIR")
+
+# Reynolds Creek CZCN soil pits
+RC_CZCN_pits <- read.csv("./map/RCrk_CZCN_soil_pit_locs.csv")
 
 # Reynolds Creek rasters
-raster_MAST <- raster("./map/tsoi_est2_3857.tif")
+raster_MAST <- raster("./map/RCrk_MAST_estimate.tif")
 raster_GEP <- raster("./map/RCrk_GEP_estimate_3857.tif") 
 raster_DEM <- raster("./map/RCrk_DEM_3857.tif")
 raster_HILLSH <- raster("./map/RCrk_DEM_Hillshade_3857.tif")
@@ -79,7 +90,9 @@ num_vars <- RC_data_summary %>%
 names(num_vars) <- RC_data_summary %>% 
                     filter(!is.na(Variable)) %>%
                     filter(!is.na(Short_Desc)) %>%
-                    pull(Short_Desc) 
+                    pull(Short_Desc)
+# Add a "None" option
+#num_vars <- c(num_vars, setNames("None", "None"))
             
 raster_lyrs <- c(
   "None" = 0,
@@ -93,3 +106,33 @@ char_vars <- c(
   "Watershed" = "L1"
 )
 
+
+# Create icons for map markers
+favicons <- iconList(
+  "pit" = makeIcon(
+    iconUrl = "./images/pit_icon_2.png",
+    iconWidth = 35
+  ),
+  "weir" = makeIcon(
+    iconUrl = "./images/weir_icon.png",
+    iconWidth = 25,
+    iconHeight = 25
+  ),
+  "met" = makeIcon(
+    iconUrl = "./images/met_icon_1.png",
+    iconWidth = 25,
+    iconHeight = 25
+  ))
+
+### Load sensor data
+# sen_NBT <- read.csv("./data/NB_T_sensor_clean.csv")
+# sen_NBT$DateTime15 <- as.POSIXct(sen_NBT$DateTime15,
+#                                  tryFormats = c("%Y-%m-%d %H:%M:%OS",
+#                                                 "%Y/%m/%d %H:%M:%OS",
+#                                                 "%Y-%m-%d %H:%M",
+#                                                 "%Y/%m/%d %H:%M",
+#                                                 "%Y-%m-%d",
+#                                                 "%Y/%m/%d"))
+
+sensor_files <- list.files("./data/Sensors")
+sensor_filenames <- gsub(".dat", "", sensor_files)
