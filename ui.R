@@ -1,6 +1,3 @@
-library(leaflet)
-
-
 
 
 ####################
@@ -39,16 +36,17 @@ fluidPage(
         class = "panel panel-default", 
         fixed = TRUE,
         draggable = TRUE, 
-        top = 180, 
+        top = 150, 
         left = "auto", 
         right = 240, 
         bottom = "auto",
-        width = 330, 
+        width = 320, 
         height = "auto",
         h2("Map Explorer"), #Panel title
 
         # Create an input for the panel
-        selectInput("point_var", HTML("<b>Map Analyte</b>"), num_vars),
+        selectInput("point_var", HTML("<b>Map Analyte</b>"), num_vars, 
+                    selected = "ph_h2o"),
         
         # Create a 1x2 panel with 2 input boxes
         column(width=12, 
@@ -56,7 +54,7 @@ fluidPage(
                 column(6,
                   textInput("lyr_top", "Soil layer top:", value=0)),
                 column(6,
-                  textInput("lyr_bot", "Soil layer bottom:", value=5)))),
+                  textInput("lyr_bot", "Soil layer bottom:", value="5-10")))),
         helpText("Enter a single depth value or range (cm)"),         
         hr(),
         div(style = 'padding-top:0px;'),
@@ -64,8 +62,13 @@ fluidPage(
                     choices=raster_lyrs),
         helpText("Map layers can take ~1 minute to load."),
         hr(),
+        h5(HTML("<b>Map Elements</b>")),
         div(style = 'padding-top:0px;'),        
-        checkboxInput("watershed_bounds", "Show watershed boundaries", TRUE)
+        checkboxInput("soil_pits_show", "Soil sampling locations", TRUE),
+        checkboxInput("czcn_sites_show", "CZCN GeoMicrobiology sites", TRUE),
+        checkboxInput("met_show", "Meteorologic stations", TRUE),
+        checkboxInput("weir_show", "Stream flow weir", TRUE),
+        checkboxInput("watershed_bounds", "Watershed boundaries", TRUE)
         # Add plot to panel
         #plotOutput("histCentile", height = 200), (set up in server.R)
       ),
@@ -84,9 +87,12 @@ tabPanel("Plot Explorer",
                   h2("Plot options:"),
                   hr(),
                   selectInput("plot_type", "Plot type:", c("Scatter","Bar","Box", "Time Series")),
-                  selectInput("plot_x", "X-axis Variable:", num_vars),
-                  selectInput("plot_y", "Y-axis Variable:", num_vars),
-                  selectInput("plot_color", "Color by:", num_vars),
+                  selectInput("plot_x", "X-axis Variable:", num_vars,
+                              selected = "lyr_soc"),
+                  selectInput("plot_y", "Y-axis Variable:", num_vars,
+                              selected = "ph_h2o"),
+                  selectInput("plot_color", "Color by:", num_vars,
+                              selected = "ph_h2o"),
                   hr(),
                   helpText("Notes go here.")
            ),
@@ -102,14 +108,21 @@ tabPanel("Plot Explorer",
          hr(),
          fluidRow(
            column(2),
+           column(6,
+                  h2("Plot data")),
+           column(2,
+                  downloadButton('downloadPlotData', 'Download data'))
+           ),
+         fluidRow(         
+           column(2),
            column(8,
-           # Insert a datatable object (set up in server.R)
-           DT::dataTableOutput("plotTBL"))
+                  # Insert a datatable object (set up in server.R)
+                  DT::dataTableOutput("plotTBL"))
          )
          ),
 
 ### DATA EXPLORER TAB STARTS HERE ###   
-    tabPanel("Dynamic Table",
+    tabPanel("Database",
       #Create a row with columns
       fluidRow(
         column(4,
@@ -126,7 +139,10 @@ tabPanel("Plot Explorer",
         column(2,
           # Create a numeric input box
           numericInput("maxDepth", "Layer bottom limit (cm)", min=0, max=1000, value=NA)
-        )
+        ),
+        column(6),
+        column(2,
+               downloadButton('downloadDatabase', 'Download database'))
       ),
       hr(), # Insert a horizontal line break
       
@@ -137,15 +153,67 @@ tabPanel("Plot Explorer",
       DT::dataTableOutput("databaseTBL")
       ),
 
+### SENSORS TAB STARTS HERE ###   
+tabPanel("Sensors",
+         h2("Reynolds Creek Sensors"),
+         leafletOutput("sensormap", height="30vh"),
+         br(),
+         fluidRow(
+           column(2, style = "background-color:#e4e7eb;",
+                  selectInput('sensor_group', h3("Sensor group:"), c("CZCN Soil Pits")),
+                  hr(),
+                  selectInput('sensor_ID1', tags$b("Plot 1 Sensor:"), c("")),
+                  div(selectInput('sensor1_analyte1', "Analyte 1:", c("Analyte 1")), style = "padding-left:25px;"),
+                  div(selectInput('sensor1_analyte2', "Analyte 2:", c("Analyte 2")), style = "padding-left:25px;"),
+                  div(selectInput('sensor1_analyte3', "Analyte 3:", c("Analyte 3")), style = "padding-left:25px;"),
+                  hr(),
+                  selectInput('sensor_ID2', tags$b("Plot 2 Sensor:"), c("")),
+                  div(selectInput('sensor2_analyte1', "Analyte 1:", c("Analyte 1")), style = "padding-left:25px;"),
+                  div(selectInput('sensor2_analyte2', "Analyte 2:", c("Analyte 2")), style = "padding-left:25px;"),
+                  div(selectInput('sensor2_analyte3', "Analyte 3:", c("Analyte 3")), style = "padding-left:25px;"),
+           ),
+           column(10,
+                  plotlyOutput("plot_sens1"),
+                  hr(),
+                  br(),
+                  plotlyOutput("plot_sens2"),
+                  )
+         ),
+         hr(),
+         br(),
+         h2("Sensor Data Table"),
+         fluidRow(
+           column(2, style = "background-color:#e4e7eb;",
+                  selectInput('sensor_tbl_group', h3("Sensor group:"), c("CZCN Soil Pits")),
+                  hr(),
+                  selectInput('sensor_tbl_ID', tags$b("Sensor name:"), c("")),
+                  hr(),
+                  downloadButton('downloadSensor', 'Download'),
+                  hr()),
+           column(10,
+                  DT::dataTableOutput("sensor_tbl"))
+         )
+),
+
+### SOURCES TAB STARTS HERE ###   
+tabPanel("Water Chemistry"),
+
 ### DATA SUMMARY TAB STARTS HERE ### 
-  tabPanel("Data Info",
+  tabPanel("Database Info",
            h2("Database variable information"),
            h4(uniq_loc_text),
            hr(),
            fluidRow(
              column(6,
-                DT::dataTableOutput("data_summaryTBL")))
-   )
+                DT::dataTableOutput("data_summaryTBL"))),
+           hr()
+           ),
+         
+### SOURCES TAB STARTS HERE ###   
+  tabPanel("Resources"),
+
+### SOURCES TAB STARTS HERE ###   
+  tabPanel("Contact")
 
   ) # Close navbarpage
   ) # Close conditional panel containing the entire app UI
